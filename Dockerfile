@@ -35,8 +35,8 @@ ENTRYPOINT ["/neurodocker/startup.sh"]
 #--------------------------
 RUN yum install -y -q bc libgomp libXmu libXt tcsh perl \
     && yum clean packages \
-    && rm -rf /var/cache/yum/* /tmp/* /var/tmp/* \
-    && echo "Downloading FreeSurfer ..." \
+    && rm -rf /var/cache/yum/* /tmp/* /var/tmp/*
+RUN echo "Downloading FreeSurfer ..." \
     && curl -sSL --retry 5 https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/6.0.0/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz \
     | tar xz -C /opt \
     --exclude='freesurfer/trctrain' \
