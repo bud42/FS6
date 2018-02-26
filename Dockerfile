@@ -9,6 +9,20 @@
 
 FROM centos:6
 
+# Install packages required by dax
+RUN yum install -y -q \
+    libxml2-dev libxslt1-dev python-dev zlib1g-dev \
+    python-pip python-matplotlib python-numpy python-scipy python-requests python-urllib3
+
+# Install dax
+RUN pip install \
+    https://github.com/VUIIS/dax/archive/master.zip
+
+# Install recon-stats
+COPY src /opt/src/
+WORKDIR /opt/src/recon-stats
+RUN python setup.py install
+
 #----------------------------------------------------------
 # Install common dependencies and create default entrypoint
 #----------------------------------------------------------
@@ -41,3 +55,11 @@ RUN echo "Downloading FreeSurfer ..." \
     | tar xz -C /opt \
     && sed -i '$isource $FREESURFER_HOME/SetUpFreeSurfer.sh' $ND_ENTRYPOINT
 ENV FREESURFER_HOME=/opt/freesurfer
+
+# Make sure other stuff is in path
+RUN chmod +x /opt/src/make_screenshots.sh
+ENV PATH=/opt/src:$PATH
+
+# Get the spider code
+COPY spider.py /opt/spider.py
+ENTRYPOINT ["python", "/opt/spider.py"]
