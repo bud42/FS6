@@ -55,7 +55,7 @@ RUN pip install https://github.com/VUIIS/dax/archive/v0.7.1.zip
 
 # Install FreeSurfer v6.0.1
 RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
-    bc libgomp1 libxmu6 libxt6 tcsh perl tar perl-modules imagemagick
+    bc libgomp1 libxmu6 libxt6 tcsh perl tar perl-modules imagemagick \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && echo "Downloading FreeSurfer ..." \
