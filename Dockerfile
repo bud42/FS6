@@ -33,7 +33,7 @@
 
 FROM ubuntu:trusty
 
-RUN apt-get update -qq && apt-get install -yq --no-install-recommends  \
+RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
     apt-utils bzip2 ca-certificates curl unzip xorg wget xvfb \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -53,15 +53,48 @@ RUN pip install pydicom==0.9.9
 # Install dax 
 RUN pip install https://github.com/VUIIS/dax/archive/v0.7.1.zip
 
-# Install FreeSurfer v6.0.0
-RUN apt-get update -qq && apt-get install -yq --no-install-recommends bc libgomp1 libxmu6 libxt6 tcsh perl \
+# Install FreeSurfer v6.0.1
+RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
+    bc libgomp1 libxmu6 libxt6 tcsh perl tar perl-modules imagemagick
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && echo "Downloading FreeSurfer ..." \
     && curl -sSL --retry 5 \
-    https://www.dropbox.com/s/96fejazytcoaiay/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0_MinimumForDocker.tgz \
+    https://www.dropbox.com/s/ncog7pqnyor40pu/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.1-MinimumForDocker.tgz \
     | tar xz -C /opt
 ENV FREESURFER_HOME=/opt/freesurfer
+
+# Install packages needed to use freeview
+RUN apt-get update && apt-get install -y \
+    libjpeg62 libglu1-mesa libqt4-opengl libqt4-scripttools
+
+# Configure environment
+ENV FSLDIR=/usr/share/fsl/5.0
+ENV FSLOUTPUTTYPE=NIFTI_GZ
+ENV PATH=/usr/lib/fsl/5.0:$PATH
+ENV FSLMULTIFILEQUIT=TRUE
+ENV POSSUMDIR=/usr/share/fsl/5.0
+ENV LD_LIBRARY_PATH=/usr/lib/fsl/5.0:$LD_LIBRARY_PATH
+ENV FSLTCLSH=/usr/bin/tclsh
+ENV FSLWISH=/usr/bin/wish
+ENV FSLOUTPUTTYPE=NIFTI_GZ
+ENV OS Linux
+ENV FS_OVERRIDE 0
+ENV FIX_VERTEX_AREA=
+ENV SUBJECTS_DIR /opt/freesurfer/subjects
+ENV FSF_OUTPUT_FORMAT nii.gz
+ENV MNI_DIR /opt/freesurfer/mni
+ENV LOCAL_DIR /opt/freesurfer/local
+ENV FREESURFER_HOME /opt/freesurfer
+ENV FSFAST_HOME /opt/freesurfer/fsfast
+ENV MINC_BIN_DIR /opt/freesurfer/mni/bin
+ENV MINC_LIB_DIR /opt/freesurfer/mni/lib
+ENV MNI_DATAPATH /opt/freesurfer/mni/data
+ENV FMRI_ANALYSIS_DIR /opt/freesurfer/fsfast
+ENV PERL5LIB /opt/freesurfer/mni/lib/perl5/5.8.5
+ENV MNI_PERL5LIB /opt/freesurfer/mni/lib/perl5/5.8.5
+ENV PATH /opt/freesurfer/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PYTHONPATH=""
 
 # Install recon-stats
 COPY src /opt/src/
