@@ -37,7 +37,6 @@ RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
     apt-utils bzip2 ca-certificates curl unzip xorg wget xvfb \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && localedef --force --inputfile=en_US --charmap=UTF-8 C.UTF-8 \
     && chmod 777 /opt && chmod a+s /opt
 
 # Install packages required by dax
@@ -55,7 +54,7 @@ RUN pip install https://github.com/VUIIS/dax/archive/v0.7.1.zip
 
 # Install FreeSurfer v6.0.1
 RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
-    bc libgomp1 libxmu6 libxt6 tcsh perl tar perl-modules imagemagick \
+    bc libgomp1 libxmu6 libxt6 tcsh perl tar perl-modules \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && echo "Downloading FreeSurfer ..." \
@@ -97,6 +96,12 @@ ENV PATH /opt/freesurfer/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:
 ENV PYTHONPATH=""
 ENV FS_LICENSE=/opt/license.txt
 
+# Install packages needed make screenshots
+RUN apt-get update && apt-get install -y \
+    imagemagick ghostscript libgs-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    
 # Install recon-stats
 COPY src /opt/src/
 WORKDIR /opt/src/recon-stats
