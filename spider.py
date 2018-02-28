@@ -64,8 +64,7 @@ recon-all \
 -sd ${temp_dir}/Subjects \
 -s ${assessor_label} \
 -all \
--qcache \
--hippocampal-subfields-T1
+-qcache
 
 # Unlink average brains so they don't get uploaded
 if [ -e ${temp_dir}/Subjects/fsaverage ]; then
