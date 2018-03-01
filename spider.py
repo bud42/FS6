@@ -79,7 +79,10 @@ fi
 
 # Create QA PDFs
 cd ${temp_dir}/Subjects/${assessor_label} && \
-xvfb-run --server-args "-screen 0 1920x1080x24" make_screenshots.sh
+xvfb-run -e xvfb.err -f xvfb.auth --wait=5 -a \
+--server-args "-screen 0 1920x1080x24" \
+make_screenshots.sh
+
 mv ${temp_dir}/Subjects/${assessor_label}/all.pdf ${temp_dir}/report.pdf
 
 # Create stats file
