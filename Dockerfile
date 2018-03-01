@@ -54,7 +54,7 @@ ENV MNI_DATAPATH /opt/freesurfer/mni/data
 ENV FMRI_ANALYSIS_DIR /opt/freesurfer/fsfast
 ENV PERL5LIB /opt/freesurfer/mni/lib/perl5/5.8.5
 ENV MNI_PERL5LIB /opt/freesurfer/mni/lib/perl5/5.8.5
-ENV PATH $PATH:/opt/freesurfer/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH=$PATH:/opt/freesurfer/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV PYTHONPATH=""
 ENV FS_LICENSE=/opt/license.txt
 RUN touch /opt/license.txt
