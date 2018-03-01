@@ -36,14 +36,8 @@ RUN apt-get update && apt-get install -y \
     libjpeg62 libglu1-mesa libqt4-opengl libqt4-scripttools
 
 # Configure environment
-ENV FSLDIR=/usr/share/fsl/5.0
 ENV FSLOUTPUTTYPE=NIFTI_GZ
-ENV PATH=/usr/lib/fsl/5.0:$PATH
 ENV FSLMULTIFILEQUIT=TRUE
-ENV POSSUMDIR=/usr/share/fsl/5.0
-ENV LD_LIBRARY_PATH=/usr/lib/fsl/5.0:$LD_LIBRARY_PATH
-ENV FSLTCLSH=/usr/bin/tclsh
-ENV FSLWISH=/usr/bin/wish
 ENV FSLOUTPUTTYPE=NIFTI_GZ
 ENV OS Linux
 ENV FS_OVERRIDE 0
@@ -60,11 +54,10 @@ ENV MNI_DATAPATH /opt/freesurfer/mni/data
 ENV FMRI_ANALYSIS_DIR /opt/freesurfer/fsfast
 ENV PERL5LIB /opt/freesurfer/mni/lib/perl5/5.8.5
 ENV MNI_PERL5LIB /opt/freesurfer/mni/lib/perl5/5.8.5
-ENV PATH /opt/freesurfer/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH $PATH:/opt/freesurfer/bin:/opt/freesurfer/fsfast/bin:/opt/freesurfer/tktools:/opt/freesurfer/mni/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV PYTHONPATH=""
 ENV FS_LICENSE=/opt/license.txt
 RUN touch /opt/license.txt
-
 
 # Install packages needed make screenshots
 RUN apt-get update && apt-get install -y \
