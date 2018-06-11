@@ -20,16 +20,40 @@ RUN pip install pydicom==0.9.9
 # Install dax 
 RUN pip install https://github.com/VUIIS/dax/archive/v0.7.1.zip
 
-# Install FreeSurfer v6.0.1
-RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
-    bc libgomp1 libxmu6 libxt6 tcsh perl tar perl-modules \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && echo "Downloading FreeSurfer ..." \
-    && curl -sSL --retry 5 \
-    https://www.dropbox.com/s/ncog7pqnyor40pu/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.1-MinimumForDocker.tgz \
-    | tar xz -C /opt
+# Install FreeSurfer
+#RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
+#    bc libgomp1 libxmu6 libxt6 tcsh perl tar perl-modules \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+#    && echo "Downloading FreeSurfer ..." \
+#    && curl -sSL --retry 5 \
+#    https://www.dropbox.com/s/ncog7pqnyor40pu/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.1-MinimumForDocker.tgz \
+#    | tar xz -C /opt
 ENV FREESURFER_HOME=/opt/freesurfer
+RUN apt-get update && apt-get install -y wget
+RUN wget -qO- ftp://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/dev/freesurfer-linux-centos6_x86_64-dev.tar.gz | tar zxv --no-same-owner -C /opt \
+    --exclude='freesurfer/trctrain' \
+    --exclude='freesurfer/subjects/fsaverage_sym' \
+    --exclude='freesurfer/subjects/fsaverage3' \
+    --exclude='freesurfer/subjects/fsaverage4' \
+    --exclude='freesurfer/subjects/fsaverage5' \
+    --exclude='freesurfer/subjects/fsaverage6' \
+    --exclude='freesurfer/subjects/cvs_avg35' \
+    --exclude='freesurfer/subjects/cvs_avg35_inMNI152' \
+    --exclude='freesurfer/subjects/bert' \
+    --exclude='freesurfer/subjects/V1_average' \
+    --exclude='freesurfer/average/mult-comp-cor' \
+    --exclude='freesurfer/average/*.*' \
+    --exclude='freesurfer/average/Yeo*' \
+    --exclude='freesurfer/average/Buckner*' \
+    --exclude='freesurfer/average/Choi*' \
+    --exclude='freesurfer/tktools' \
+    --exclude='freesurfer/lib/cuda' \
+    --exclude='freesurfer/lib/qt' \
+    --exclude='freesurfer/bin/dmri*' \
+    --exclude='freesurfer/subjects/fsaverage' \
+    --exclude='freesurfer/lib/petsc' \
+    --exclude='freesurfer/lib/KWWIdgets'
 
 # Install packages needed to use freeview
 RUN apt-get update && apt-get install -y \
