@@ -57,7 +57,8 @@ if [[ "${control}" && "${control}" != "None" ]]; then
    cp "${control}" ${temp_dir}/Subjects/${assessor_label}/tmp/control.dat
 fi
    
-# Run the recon
+# Run the recon including hippo subfields
+export WRITE_POSTERIORS=1
 recon-all \
 -sd ${temp_dir}/Subjects \
 -s ${assessor_label} \
