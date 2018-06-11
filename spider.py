@@ -3,8 +3,6 @@ from dax import AutoSpider
 
 name = 'FS6'
 
-version = '1.0.0'
-
 exe_lang = 'bash'
 
 inputs = [
@@ -64,7 +62,8 @@ recon-all \
 -sd ${temp_dir}/Subjects \
 -s ${assessor_label} \
 -all \
--qcache
+-qcache \
+-hippocampal-subfields-T1
 
 # Unlink average brains so they don't get uploaded
 if [ -e ${temp_dir}/Subjects/fsaverage ]; then
@@ -98,7 +97,6 @@ if __name__ == '__main__':
         inputs,
         outputs,
         code,
-        version=version,
         exe_lang=exe_lang,
     )
 
