@@ -21,6 +21,10 @@ RUN pip install pydicom==0.9.9
 RUN pip install https://github.com/VUIIS/dax/archive/v0.7.1.zip
 
 # Install FreeSurfer
+RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
+    bc libgomp1 libxmu6 libxt6 tcsh perl tar perl-modules \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 #RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
 #    bc libgomp1 libxmu6 libxt6 tcsh perl tar perl-modules \
 #    && apt-get clean \
