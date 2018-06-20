@@ -57,14 +57,12 @@ if [[ "${control}" && "${control}" != "None" ]]; then
    cp "${control}" ${temp_dir}/Subjects/${assessor_label}/tmp/control.dat
 fi
    
-# Run the recon including hippo subfields
-export WRITE_POSTERIORS=1
+# Run the recon
 recon-all \
 -sd ${temp_dir}/Subjects \
 -s ${assessor_label} \
 -all \
--qcache \
--hippocampal-subfields-T1
+-qcache
 
 # Unlink average brains so they don't get uploaded
 if [ -e ${temp_dir}/Subjects/fsaverage ]; then
