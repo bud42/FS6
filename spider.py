@@ -56,7 +56,7 @@ if [[ "${control}" && "${control}" != "None" ]]; then
    mkdir -p ${temp_dir}/Subjects/${assessor_label}/tmp/
    cp "${control}" ${temp_dir}/Subjects/${assessor_label}/tmp/control.dat
 fi
-   
+
 # Run the recon
 recon-all \
 -sd ${temp_dir}/Subjects \

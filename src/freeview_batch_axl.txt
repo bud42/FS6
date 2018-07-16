@@ -1,5 +1,5 @@
 -v mri/T1.mgz:visible=1:grayscale=55,165
--viewsize 400 400 --layout 1 --viewport z
+-viewsize 400 400 --layout 1 --zoom 1.15 --viewport z
 -slice  49  49  49 -ss axl049_a.png -noquit
 -slice  53  53  53 -ss axl053_a.png -noquit
 -slice  57  57  57 -ss axl057_a.png -noquit
@@ -37,13 +37,10 @@
 -slice 185 185 185 -ss axl185_a.png -noquit
 -slice 189 189 189 -ss axl189_a.png -noquit
 -slice 193 193 193 -ss axl193_a.png -noquit
--slice 197 197 197 -ss axl197_a.png -noquit
--slice 201 201 201 -ss axl201_a.png -noquit
--slice 205 205 205 -ss axl205_a.png -noquit
 -v mri/aseg.sub.mgz:visible=1:colormap=lut
--f surf/lh.white:edgecolor=blue:edgethickness=1
+-f surf/lh.white:edgecolor=turquoise:edgethickness=1
 -f surf/lh.pial:edgecolor=red:edgethickness=1
--f surf/rh.white:edgecolor=blue:edgethickness=1
+-f surf/rh.white:edgecolor=turquoise:edgethickness=1
 -f surf/rh.pial:edgecolor=red:edgethickness=1
 -slice  49  49  49 -ss axl049_b.png -noquit
 -slice  53  53  53 -ss axl053_b.png -noquit
@@ -82,7 +79,4 @@
 -slice 185 185 185 -ss axl185_b.png -noquit
 -slice 189 189 189 -ss axl189_b.png -noquit
 -slice 193 193 193 -ss axl193_b.png -noquit
--slice 197 197 197 -ss axl197_b.png -noquit
--slice 201 201 201 -ss axl201_b.png -noquit
--slice 205 205 205 -ss axl205_b.png -noquit
 -quit
