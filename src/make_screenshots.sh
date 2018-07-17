@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Create the aseg without wm or cerebral gm
 mri_binarize --i mri/aseg.mgz --o mri/aseg.sub.mgz \
 --replace 2  0 --replace 3 0 --replace 41 0 --replace 42 0
