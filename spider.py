@@ -10,7 +10,8 @@ inputs = [
     ("brainmask", "FILE", "Edited brainmask image file", "F"),
     ("control", "FILE", "Edited control points file", "F"),
     ("wm", "FILE", "Edited wm image file", "F"),
-    ("aseg", "FILE", "Edited aseg image file", "F")]
+    ("aseg", "FILE", "Edited aseg image file", "F"),
+    ("extraflags", "STRING", "Extra Flags for recon-all", "F")]
 
 outputs = [
     ("stats.txt", "FILE", "STATS", "FreeSurfer stats"),
@@ -62,7 +63,7 @@ recon-all \
 -sd ${temp_dir}/Subjects \
 -s ${assessor_label} \
 -all \
--qcache
+-qcache ${extraflags}
 
 # Unlink average brains so they don't get uploaded
 if [ -e ${temp_dir}/Subjects/fsaverage ]; then
