@@ -22,6 +22,7 @@
 -ss rh_med_thick.png -noquit
 --hide surface
 -f surf/rh.pial:annot=aparc
+-zoom 1.15 
 -cam azimuth 180 
 -ss rh_lat_aparc.png -noquit
 -cam azimuth 180 
