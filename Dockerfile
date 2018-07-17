@@ -82,3 +82,6 @@ RUN mkdir /INPUTS /OUTPUTS
 # Get the spider code
 COPY spider.py /opt/spider.py
 ENTRYPOINT ["python", "/opt/spider.py"]
+
+# Make directory for Justin
+RUN mkdir /scratch
