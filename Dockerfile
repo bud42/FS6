@@ -9,9 +9,13 @@ RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
 
 # Install packages for python
 RUN apt-get update && apt-get install -yq --no-install-recommends \
-    python-pip python-setuptools python-dev \
-    pkg-config libfreetype6-dev libpng12-dev zlib1g-dev libjpeg-dev libxslt1-dev \
+    python-pip python-setuptools python-dev pkg-config \
+    libfreetype6-dev libxml2-dev libxslt1-dev \
+    libpng12-dev zlib1g-dev libjpeg-dev \
     gcc g++ \
+    python-pil python-tk \
+    python-numpy python-scipy python-pandas \
+    python-matplotlib python-requests \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
