@@ -11,6 +11,7 @@ RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     python-pip python-setuptools python-dev \
     pkg-config libfreetype6-dev libpng12-dev \
+    gcc g++ \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
