@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ASSR=$1
+
 # Create the aseg without wm or cerebral gm
 mri_binarize --i mri/aseg.mgz --o mri/aseg.sub.mgz \
 --replace 2  0 --replace 3 0 --replace 41 0 --replace 42 0
@@ -15,7 +17,8 @@ for i in [lr]h_*.png;do convert $i -fuzz 1% -trim +repage t${i};done
 
 # Annotate with slice numbers
 for i in *[0-9][0-9][0-9]*.png
-	do convert $i -pointsize 18 -fill white -gravity southeast -annotate +5+5 ${i:3:3} ${i}
+	do convert $i -gravity North -chop x55 -pointsize 18 -fill yellow \
+	-gravity southeast -annotate +5+5 ${i:3:3} -background white -splice 0x5 ${i}
 done
 
 # Create first page
@@ -25,16 +28,20 @@ trh_lat_aparc.png trh_lat_pial.png trh_lat_thick.png \
 tlh_med_aparc.png tlh_med_pial.png tlh_med_thick.png \
 trh_med_aparc.png trh_med_pial.png trh_med_thick.png \
 -tile 3x -quality 100 -background black -gravity center \
--trim -border 5 -bordercolor black -resize 300x 3d_mont.png
+-trim -border 5 -bordercolor black -resize 300x first_page.png
 
-convert 3d_mont.png -gravity SouthEast -background white -splice 0x40 \
--pointsize 16 -annotate +10+10 "$(date)" -gravity SouthWest -annotate +10+10 \
+convert first_page.png \
+-background white -resize 1194x1479 \
+-extent 1194x1479 -bordercolor white -border 15 \
+-gravity SouthEast -background white -splice 0x15 -pointsize 16 \
+-annotate +15+10 "$(date)" -gravity SouthWest -annotate +15+10 \
 "https://xnat.vanderbilt.edu/xnat, brian.d.boyd@vanderbilt.edu" \
-3d_mont.png
-
-convert 3d_mont.png -gravity NorthWest -background white -splice 0x80 \
--pointsize 30 -annotate +10+20 'DAX QA Summary - FreeSurfer 6 recon-all' \
-3d_mont.png
+-gravity NorthWest -background white -splice 0x60 \
+-pointsize 24 -annotate +15+35 \
+'DAX QA Summary - FreeSurfer 6 recon-all' \
+-pointsize 18 -gravity NorthEast -annotate +15+10 \
+$ASSR \
+first_page.png
 
 # Create montages
 montage -mode concatenate \
@@ -259,9 +266,16 @@ sag069_a.png sag069_b.png \
 sag065_a.png sag065_b.png \
 -tile 2x -quality 100 sag_mont11.png
 
+# Pad and annotate with assessor name
+for i in *_mont*.png
+	do convert ${i} -bordercolor white -border 11x1 \
+	-background white -resize 1224x1554 -extent 1224x1554 \
+	-gravity NorthEast -splice 0x30 -pointsize 16 -annotate +15+10 $ASSR ${i}
+done
 
+# Concatenate into PDF
 convert \
-3d_mont.png \
+first_page.png \
 axl_mont1.png axl_mont2.png axl_mont3.png axl_mont4.png axl_mont5.png \
 axl_mont6.png axl_mont7.png axl_mont8.png axl_mont9.png axl_mont10.png \
 axl_mont11.png axl_mont12.png \
@@ -271,10 +285,11 @@ cor_mont11.png cor_mont12.png cor_mont13.png cor_mont14.png \
 sag_mont1.png sag_mont2.png sag_mont3.png sag_mont4.png sag_mont5.png \
 sag_mont6.png sag_mont7.png sag_mont8.png sag_mont9.png sag_mont10.png \
 sag_mont11.png \
+-page letter -compress jpeg \
 all.pdf
 
 # Delete temporary files
-rm axl[0-9][0-9][0-9]*.png cor[0-9][0-9][0-9]*.png \
-sag[0-9][0-9][0-9]*.png *_mont[0-9].png
+rm first_page.png axl[0-9][0-9][0-9]*.png cor[0-9][0-9][0-9]*.png
+rm sag[0-9][0-9][0-9]*.png *_mont*.png *[lr]h_*.png 
 
 echo 'screenshots DONE'
