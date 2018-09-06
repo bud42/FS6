@@ -17,7 +17,7 @@ for i in [lr]h_*.png;do convert $i -fuzz 1% -trim +repage t${i};done
 
 # Annotate with slice numbers
 for i in *[0-9][0-9][0-9]*.png
-	do convert $i -gravity North -chop x55 -pointsize 18 -fill yellow \
+	do convert $i -gravity North -shave 25x25 -pointsize 18 -fill yellow \
 	-gravity southeast -annotate +5+5 ${i:3:3} -background white -splice 0x5 ${i}
 done
 
