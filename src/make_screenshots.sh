@@ -15,10 +15,15 @@ freeview -cmd /opt/src/freeview_batch_sag.txt
 # Trim 3d screenshots
 for i in [lr]h_*.png;do convert $i -fuzz 1% -trim +repage t${i};done
 
-# Annotate with slice numbers
+# Trim top/bottom, annotate with slice numbers, add bottom border
 for i in *[0-9][0-9][0-9]*.png
-	do convert $i -gravity North -shave 25x25 -pointsize 18 -fill yellow \
-	-gravity southeast -annotate +5+5 ${i:3:3} -background white -splice 0x5 ${i}
+	do 
+		convert ${i} \
+		-gravity South -background white -splice 0x1 -fuzz 1% -trim +repage -chop 0x1 \
+		-gravity North -background white -splice 0x1 -fuzz 1% -trim +repage -chop 0x1 \
+		-background black -gravity center -resize 400x345 -extent 400x345 +repage \
+		-pointsize 18 -fill yellow -gravity southeast -annotate +5+5 ${i:3:3} \
+		-background white -splice 0x5 ${i}
 done
 
 # Create first page
@@ -268,7 +273,7 @@ sag065_a.png sag065_b.png \
 
 # Pad and annotate with assessor name
 for i in *_mont*.png
-	do convert ${i} -bordercolor white -border 11x1 \
+	do convert ${i} -bordercolor white -border 13x1 \
 	-background white -resize 1224x1554 -extent 1224x1554 \
 	-gravity NorthEast -splice 0x30 -pointsize 16 -annotate +15+10 $ASSR ${i}
 done
