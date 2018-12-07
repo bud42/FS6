@@ -49,7 +49,7 @@ fi
 
 if [[ "${aseg}" && "${aseg}" != "None" ]]; then
    echo "Copying aseg"
-   cp "${aseg}" ${temp_dir}/Subjects/${assessor_label}/mri/aseg.mgz
+   cp "${aseg}" ${temp_dir}/Subjects/${assessor_label}/mri/aseg.presurf.mgz
 fi
 
 if [[ "${control}" && "${control}" != "None" ]]; then
