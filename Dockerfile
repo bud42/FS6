@@ -15,11 +15,12 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     gcc g++ \
     python-pil python-tk \
     python-numpy python-scipy python-pandas \
-    python-matplotlib python-requests \
+    python-requests \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install dax 
+# Install dax
+RUN pip install matplotlib==2.2.2
 RUN pip install dax==0.8.0
 
 # Install FreeSurfer v6.0.1
