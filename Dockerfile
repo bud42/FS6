@@ -86,3 +86,6 @@ ENTRYPOINT ["python", "/opt/spider.py"]
 
 # Make directory for Justin
 RUN mkdir /scratch
+
+# Silly fix for ImageMagick
+COPY ImageMagick/policy.xml /etc/ImageMagick/policy.xml
